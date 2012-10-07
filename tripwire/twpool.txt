@@ -1,0 +1,75 @@
+#
+# Standard Debian Tripwire configuration
+#
+#
+# This configuration covers the contents of all 'Essential: yes'
+# packages along with any packages necessary for access to an internet
+# or system availability, e.g. name services, mail services, PCMCIA
+# support, RAID support, and backup/restore support.
+#
+
+#
+# Global Variable Definitions
+#
+# These definitions override those in to configuration file.  Do not         
+# change them unless you understand what you're doing.
+#
+
+@@section GLOBAL
+TWBIN = /usr/sbin;
+TWETC = /etc/tripwire;
+TWVAR = /var/lib/tripwire;
+
+#
+# File System Definitions
+#
+@@section FS
+
+#
+# First, some variables to make configuration easier
+#
+SEC_CRIT      = $(IgnoreNone)-SHa ; # Critical files that cannot change
+
+SEC_BIN       = $(ReadOnly) ;        # Binaries that should not change
+
+SEC_CONFIG    = $(Dynamic) ;         # Config files that are changed
+		        # infrequently but accessed
+		        # often
+
+SEC_LOG       = $(Growing) ;         # Files that grow, but that
+			             # should never change ownership
+
+SEC_INVARIANT = +tpug ;              # Directories that should never
+		        # change permission or ownership
+
+SIG_LOW       = 33 ;                 # Non-critical files that are of
+				     # minimal security impact
+
+SIG_MED       = 66 ;                 # Non-critical files that are of
+				     # significant security impact
+
+SIG_HI        = 100 ;                # Critical files that are
+				     # significant points of
+				     # vulnerability
+
+#
+# Tripwire Binaries
+#
+(
+  rulename = "Tripwire Binaries",
+  severity = $(SIG_HI)
+)
+{
+	$(TWBIN)/siggen			-> $(SEC_BIN) ;
+	$(TWBIN)/tripwire		-> $(SEC_BIN) ;
+	$(TWBIN)/twadmin		-> $(SEC_BIN) ;
+	$(TWBIN)/twprint		-> $(SEC_BIN) ;
+}
+
+#
+# Tripwire Data Files - Configuration Files, Policy Files, Keys,
+# Reports, Databases
+#
+
+# NOTE: We remove the inode attribute because when Tripwire creates a
+# backup, it does so by renaming the old file and creating 
