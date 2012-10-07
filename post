@@ -2,8 +2,3 @@
 
 apt-get install harden-environment arno-iptables-firewall
 
-# Copy Tripwire policy
-cp -f tripwire/twpol.txt /etc/tripwire/
-
-# regen tripwire
-tripwire -m p --secure-mode low /etc/tripwire/policy.txt
