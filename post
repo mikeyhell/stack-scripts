@@ -1,3 +1,3 @@
 #!/bin/bash
 
-apt-get install debian-hardened arno-iptables-firewall
+apt-get install harden-environment arno-iptables-firewall
