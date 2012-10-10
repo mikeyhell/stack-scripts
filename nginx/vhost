@@ -1,0 +1,45 @@
+server {
+    listen   80;
+    server_name <servername>;
+    access_log /var/log/nginx/<servername>.access.log;
+    error_log /var/log/nginx/<servername>.com.error.log;
+
+	client_max_body_size 4M;
+	client_body_buffer_size 128k;
+	expires 24h;
+ 
+    location / {
+	root   <webroot>/;
+        index index.html index.php;
+
+        # if file exists return it right away
+        if (-f $request_filename) {
+                break;
+        }
+
+        if (-e $request_filename)
+        {
+                break;
+        }
+
+        # Useful rewrite for most frameworks, wordpress
+        if (!-e $request_filename) {
+                rewrite ^(.+)$ /index.php last;
+                break;
+        }
+	
+    }
+
+    location ~ \.php$ {
+        expires off;
+	fastcgi_buffers 8 256k;
+     	fastcgi_buffer_size 128k;       
+     	fastcgi_send_timeout  5m;
+     	fastcgi_read_timeout 5m;
+     	fastcgi_connect_timeout 5m;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param  SCRIPT_FILENAME  <webroot>$fastcgi_script_name;
+    }
+}
