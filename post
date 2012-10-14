@@ -10,6 +10,4 @@ dpkg-reconfigure arno-iptables-firewall
 
 
 # vim /etc/logcheck
-# vim /etc/mail.rc
-# vim /etc/mysql/my.cnf
-# modify root user
+# change logcheck cron in /etc/cron.d/logcheck to * 0 * * *   (daily)
