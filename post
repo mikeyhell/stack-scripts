@@ -5,3 +5,11 @@ apt-get install harden-environment arno-iptables-firewall rcconf postfix postfix
 # Issue w/ tiger config
 ln -s /usr/lib/tiger/systems/Linux/2 /usr/lib/tiger/systems/Linux/3
 
+dpkg-reconfigure arno-iptables-firewall
+
+
+
+# vim /etc/logcheck
+# vim /etc/mail.rc
+# vim /etc/mysql/my.cnf
+# modify root user
