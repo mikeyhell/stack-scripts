@@ -26,11 +26,11 @@ else
 	fi
 
 	# scan default apache docroot paths
-	if [ -d "/var/www/html" ]; then
-		/usr/local/maldetect/maldet -b -r /var/www/html 2
+	if [ -d "/var/www" ]; then
+		/usr/local/maldetect/maldet -b -r /var/www 2
 	fi
-	if [ -d "/usr/local/apache/htdocs" ]; then
-		/usr/local/maldetect/maldet -b -r /usr/local/apache/htdocs 2
+	if [ -d "/usr/local/apache" ]; then
+		/usr/local/maldetect/maldet -b -r /usr/local/apache 2
 	fi
 fi
 
