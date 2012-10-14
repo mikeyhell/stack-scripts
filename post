@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get install harden-environment arno-iptables-firewall rcconf -y
+apt-get install harden-environment arno-iptables-firewall rcconf postfix postfix-mysql postfix-doc -y
 
 # Issue w/ tiger config
 ln -s /usr/lib/tiger/systems/Linux/2 /usr/lib/tiger/systems/Linux/3
