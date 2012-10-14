@@ -5,9 +5,13 @@ apt-get install harden-environment arno-iptables-firewall rcconf -y
 # Issue w/ tiger config
 ln -s /usr/lib/tiger/systems/Linux/2 /usr/lib/tiger/systems/Linux/3
 
+# fucking debcfg
 dpkg-reconfigure arno-iptables-firewall
 
+# change logcheck and tiger to run once per day instead of once per hour
+#sed -i 's/0 * * * */* 0 * * */' /etc/cron.d/logcheck
 
+sed -i 's^0 \* \* \* \*^* 0 \* \* \*^' /etc/cron.d/tiger
 
 # vim /etc/logcheck
 # change logcheck cron in /etc/cron.d/logcheck to * 0 * * *   (daily)
