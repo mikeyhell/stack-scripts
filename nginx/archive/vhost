@@ -31,6 +31,7 @@ server {
     }
 
     location ~ \.php$ {
+	try_files $uri =404;
         expires off;
 	fastcgi_buffers 8 256k;
      	fastcgi_buffer_size 128k;       

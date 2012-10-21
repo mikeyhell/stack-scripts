@@ -1,0 +1,16 @@
+#server {
+#       server_name  _;
+#       rewrite ^ $scheme://mysite.com$request_uri redirect;
+#}
+
+server {
+        server_name beta.visualtraveltours.com;
+        root /sites/vtt;
+
+        include global/restrictions.conf;
+
+        # Additional rules go here.
+
+        include global/params.conf;
+}
+
