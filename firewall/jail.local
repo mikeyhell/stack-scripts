@@ -1,0 +1,66 @@
+[DEFAULT]
+
+# "ignoreip" can be an IP address, a CIDR mask or a DNS host
+ignoreip = 127.0.0.1 192.168.0.99
+bantime  = 600
+maxretry = 3
+
+# "backend" specifies the backend used to get files modification. Available
+# options are "gamin", "polling" and "auto".
+# yoh: For some reason Debian shipped python-gamin didn't work as expected
+#      This issue left ToDo, so polling is default backend for now
+backend = polling
+
+#
+# Destination email address used solely for the interpolations in
+# jail.{conf,local} configuration files.
+destemail = root@localhost
+
+# Default action to take: ban only
+action = iptables[name=%(__name__)s, port=%(port)s]
+
+
+[ssh]
+
+enabled = true
+port    = ssh
+filter  = sshd
+logpath  = /var/log/auth.log
+maxretry = 5
+
+
+[apache]
+
+enabled = true
+port    = http
+filter  = apache-auth
+logpath = /var/log/apache*/*error.log
+maxretry = 5
+
+
+[apache-noscript]
+
+enabled = false
+port    = http
+filter  = apache-noscript
+logpath = /var/log/apache*/*error.log
+maxretry = 5
+
+[postfix]
+
+enabled  = false
+port     = smtp
+filter   = postfix
+logpath  = /var/log/mail.log
+maxretry = 5
+
+
+[sasl]
+
+enabled  = true
+port     = smtp
+filter   = sasl
+failregex = warning: [-._\w]+\[<HOST>\]: SASL (?:LOGIN|PLAIN|(?:CRAM|DIGEST)-MD5) authentication failed
+logpath  = /var/log/mail.log
+maxretry = 5
+
